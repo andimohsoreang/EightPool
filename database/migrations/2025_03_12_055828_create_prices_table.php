@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_prices', function (Blueprint $table) {
+        Schema::create('prices', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('billard_table_id')->constrained('billard_tables')->onDelete('cascade');
             $table->time('start_time');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_prices');
+        Schema::dropIfExists('prices');
     }
 };

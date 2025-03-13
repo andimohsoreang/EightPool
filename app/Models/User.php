@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -44,5 +45,41 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Relasi ke model Customer Detail
+    public function customerDetail()
+    {
+        return $this->hasOne(CustomerDetail::class, 'user_id', 'id');
+    }
+
+    /**
+     * Relasi transaksi yang dibuat oleh user
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'user_id', 'id');
+    }
+
+    /**
+     * Relasi transaksi yang ditangani admin
+     */
+    public function administeredTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'admin_id', 'id');
+    }
+
+    // Pembayaran yang ditangani oleh finance
+    public function financedPayments()
+    {
+        return $this->hasMany(Payment::class, 'finance_id', 'id');
+    }
+
+    /**
+     * Cek apakah user adalah admin
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin'; // Asumsikan ada kolom role di tabel users
     }
 }
